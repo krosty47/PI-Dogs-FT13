@@ -1,10 +1,30 @@
 const router = require('express').Router();
+const { Breeds, Temperaments } = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
-router.get('/', (req, res) =>{
+router.post('/', async (req, res, next) => {
 
+    //let name = req.body.name.toLowerCase();
+    const { nameB, weight, height, years, nameT } = req.body;
 
+    try {
+        let newRaza = await Breeds.create({
+            nameB,
+            weight,
+            height,
+            years,
+            id: uuidv4(),
+        })
 
+        await newRaza.setTemperaments(nameT)  // TEDRIAMOS QUE PASAR UN ARREGLO CON EL ID DE EL TEMPERAMENTO
+
+        // LUEGO DE CREARLO HABRIA QUE MANDARLO A LA PANTALLA DEL DETALLER CON RES.REDIRECT
+        return res.send("FUNCIONO")
+
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
 module.exports = router;
