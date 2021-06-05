@@ -3,12 +3,13 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('temperament', {
+  sequelize.define('temperamentDb', {
     ID: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
+      primarykey: true
     },
-    name: {
+    nameT: {
         type: DataTypes.STRING,
         allowNull: false,
       },
