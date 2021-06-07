@@ -1,15 +1,18 @@
+import axios from 'axios';
+
+
 export const GET_ALL_BREEDS = "GET_ALL_BREEDS";
 export const GET_BREED_NAME = "GET_BREED_NAME";
 export const GET_DETAIL_BREED = "GET_DETAIL_BREED";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 
-import axios from 'axios';
 
 
 export function getAllBreeds(){
     return (dispatch) =>{
         axios.get('http://localhost:3001/dogs').then(response =>{
             dispatch({type: GET_ALL_BREEDS, payload: response.data })
+            console.log(response.data)
         })
     }
 }
