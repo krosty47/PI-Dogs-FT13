@@ -1,57 +1,146 @@
 const router = require('express').Router();
 const axios = require('axios')
-const { v4: uuidv4 } = require('uuid');
 const { Breeds, Temperaments } = require('../db');
 
 const {
     API_KEY
 } = process.env;
 
-// Únicos Endpoints/Flags que pueden utilizar
-// GET https://api.thedogapi.com/v1/breeds
-// GET https://api.thedogapi.com/v1/breeds/search?q={raza_perro}
-
 
 router.get('/', async (req, res) => {
     const { nameFront } = req.query;
 
-    if (nameFront) {
+    if (!nameFront) {  // SI EL NOMBRE NO LLEGA HABRA QUE MOSTRAR LAS PRIMERAS 8 RAZAS
+
         try {
-            let apiBreeds = await axios.get(`https://api.thedogapi.com/v1/breeds/search?q=${nameFront}`)
+            const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
+            const dbBreeds = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
 
-            let dbBreeds = await Breeds.findAll({
-                include: [         // INCLUDE NOS ASOCIA EL PRIMARY KEY DE Breeds CON EL DE Temperaments Y NOS MUESTRA EL RESULTADO EN UN ARRAY AGREGADO COMO KEY A 
-                    {              // LA RAZA CREADA
-                        model: Temperaments,
-                        required: true
-                        // VER SI ES NECESARIO DEVOLVER 1 SOLO ID UNICO EN VEZ DE 2
-                    }
-                ]
-            });
+            dbBreeds.filter(el => {
+                if (el.dataValues.nameB.toLowerCase().includes(nameFront.toLowerCase())) {
+                    let temp = el.dataValues.temperaments.map(temp => {
+                        return temp.dataValues.nameT;
+                    })
+                    // luego de obtener solo el array de temperamentos y modificar el valor del elemento, lo pusheo a la data
+                    el.dataValues.temperaments = temp.join(', ');
+                    apiData.data = [el.dataValues, ...apiData.data]
+                }
+            }
+            );
+            const final8Result = apiData.data.map(el => {
+                return {
+                    id: el.id,
+                    name: el.nameB || el.name,
+                    img: el.image && el.image.url || "imagen no encontrada",  // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
+                    temperament: el.temperament || el.temperaments // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
+                }
+            })
+            // SORT : SI COMPARAMOS 1RA OPCION MAYOR, TENEMOS QUE RETORNAR 1 PARA ORDENAR POR KEY NAME
+            final8Result.sort((a, z) => (a.name > z.name) ? 1 : -1)
 
-            // //AGARRAMOS EL ARRAY DE LA BASE DE DATOS PARA ORDENARLO Y LUEGO PUSHEARLO EN EL ARRAY DE LA API
-            //     dbBreeds.forEach(el => {
-            //     if(el.nameB.includes(nameFront)) {
-            //         // A CADA ELEMNTO DEL ARRAY LE PREGUNTAMOD SI INCLUYE EL NOMBRE QUE VIENE POR PARAMS
-            //     let temp = el.temperaments.map(e => {
-            //         return e.nameT;
-            //         // SI LO INCLUYE GUARDAMOS EN TEMP EL ARREGLO CON LOS TEMPERAMENTOS
-            //     })
-            //     el.temperaments = temp;
-            //     apiBreeds.data.push(el.temperaments) }
-            //     }
-            // );
-
-
-            res.json(dbBreeds)
-
-        } catch (err) {
+            return res.json(final8Result)
+        }
+        catch (err) {
             console.log(err)
         }
     }
 
-    // let apiBreeds = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
+    if (nameFront) {
+        try {
 
+            const apiData2 = await axios.get(`https://api.thedogapi.com/v1/breeds/search?q=${nameFront}`)
+            const dbBreeds2 = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
+
+            // INCLUDE NOS ASOCIA EL PRIMARY KEY DE Breeds CON EL DE Temperaments Y NOS MUESTRA EL RESULTADO EN UN ARRAY AGREGADO COMO KEY A 
+            // LA RAZA CREADA
+            // VER SI ES NECESARIO DEVOLVER 1 SOLO ID UNICO EN VEZ DE 2
+
+            // RAW: TRUE PARA RECIBIR EL ARRAY "PLANO", NO lE ENCONTRE LA SOLUCION, LA UNICA FORMA FUE USAR DATAVALUES
+
+            dbBreeds2.filter(el => {
+                if (el.dataValues.nameB.toLowerCase().includes(nameFront.toLowerCase())) {
+                    let temp = el.dataValues.temperaments.map(temp => {
+                        return temp.dataValues.nameT;
+                    })
+                    // luego de obtener solo el array de temperamentos y modificar el valor del elemento, lo pusheo a la data
+                    el.dataValues.temperaments = temp.join(', ');
+                    apiData2.data = [el.dataValues, ...apiData2.data]
+                }
+            }
+            );
+
+            //return res.status(404).json({message: "The breed you are looking for is not found "}) 
+
+            const finalQueryResult = apiData2.data.map(el => {
+                return {
+                    id: el.id,
+                    name: el.nameB || el.name,
+                    img: `https://cdn2.thedogapi.com/images/${el.reference_image_id}.jpg`, // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
+                    temperament: el.temperaments || el.temperament  // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
+                }
+            })
+
+            finalQueryResult.sort((a, z) => (a.name > z.name) ? 1 : -1)
+
+            return res.json(finalQueryResult)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 });
+
+router.get('/:idBreed', async (req, res) => {
+
+    try {
+        const { idBreed } = req.params;
+
+        const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
+        const dbBreeds3 = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
+
+        dbBreeds3.filter(el => {
+            if (el.dataValues.nameB.toLowerCase()) {
+                let temp = el.dataValues.temperaments.map(temp => {
+                    return temp.dataValues.nameT;
+                })
+                // luego de obtener solo el array de temperamentos y modificar el valor del elemento, lo pusheo a la data
+                el.dataValues.temperaments = temp.join(', ');
+                apiData.data = [el.dataValues, ...apiData.data]
+            }
+        }
+        );
+
+        const breed = apiData.data.find(el => el.id === parseInt(idBreed) || el.id === idBreed)
+
+        if (breed === undefined || breed === null || breed === '') {
+            return res.status(404).json({ message: "The breed you are looking for is not found " })
+        }
+        if (breed.name) {
+            return res.json({
+                img: breed.image && breed.image.url,
+                name: breed.name,
+                temperament: breed.temperament,
+                weight: breed.weight.metric,
+                height: breed.height.metric,
+                life_span: breed.life_span
+            })
+        };
+
+        if (breed.nameB) {
+            return res.json({
+                name: breed.nameB,
+                temperament: breed.temperaments,
+                weight: breed.weight,
+                height: breed.height,
+                life_span: breed.years + " years"
+            })
+        }
+    }
+    catch (err) {
+        console.log(err)
+    }
+});
+
+
 
 module.exports = router;

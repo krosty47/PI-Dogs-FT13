@@ -14,8 +14,9 @@ router.post('/', async (req, res, next) => {
             height,
             years,
             id: uuidv4(),
+            // EN CASO DE QUERER AGREGAR UNA IMAGEN:
+            // reference_image_id 
         })
-
         await newRaza.setTemperaments(nameT)  // TEDRIAMOS QUE PASAR UN ARREGLO CON EL ID DE EL TEMPERAMENTO
 
         // LUEGO DE CREARLO HABRIA QUE MANDARLO A LA PANTALLA DEL DETALLER CON RES.REDIRECT
