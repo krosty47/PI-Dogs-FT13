@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
             const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
             const dbBreeds = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
 
+            // Model.toJSON()
             dbBreeds.filter(el => {
                 if (el.dataValues.nameB.toLowerCase().includes(nameFront.toLowerCase())) {
                     let temp = el.dataValues.temperaments.map(temp => {
@@ -90,11 +91,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:idBreed', async (req, res) => {
+router.get('/detail/:idBreed', async (req, res) => {
 
+    const { idBreed } = req.params;
+    
     try {
-        const { idBreed } = req.params;
-
         const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
         const dbBreeds3 = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
 
