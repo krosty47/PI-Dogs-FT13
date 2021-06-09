@@ -2,9 +2,9 @@ import {GET_ALL_BREEDS, GET_BREED_NAME, GET_DETAIL_BREED, GET_TEMPERAMENTS} from
 
 
 const initialState = {
-    breeds: undefined,
-    breedDetail: undefined,
-    temperaments: undefined
+    breeds: [],
+    breedDetail: [],
+    temperaments: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -15,10 +15,10 @@ const rootReducer = (state = initialState, action) => {
             breeds: action.payload
         }
         case GET_BREED_NAME:
-        return {
-            ...state,
-            breeds: action.payload
-        }
+            return {
+                ...state,
+                breeds: action.payload
+            }
         case GET_DETAIL_BREED:
         return {
             ...state,

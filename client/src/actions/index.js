@@ -12,18 +12,17 @@ export function getAllBreeds(){
     return (dispatch) =>{
         axios.get('http://localhost:3001/dogs').then(response =>{
             dispatch({type: GET_ALL_BREEDS, payload: response.data })
-            console.log(response.data)
         })
     }
-}
+};
 
 export function getBreedName(nameFront){
     return (dispatch) =>{
-        axios.get(`http://localhost:3001/dogs?name=${nameFront}`).then(response =>{
+        axios.get(`http://localhost:3001/dogs?nameFront=${nameFront}`).then(response =>{
             dispatch({type: GET_BREED_NAME, payload: response.data })
         })
     }
-}
+};
 
 export function getDetailBreed(idBreed){
     return (dispatch) =>{
@@ -31,7 +30,7 @@ export function getDetailBreed(idBreed){
             dispatch({type: GET_DETAIL_BREED, payload: response.data })
         })
     }
-}
+};
 
 
 export function getTemperaments(){
@@ -40,7 +39,7 @@ export function getTemperaments(){
             dispatch({type: GET_TEMPERAMENTS, payload: response.data })
         })
     }
-}
+};
 
 
 
