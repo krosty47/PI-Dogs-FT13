@@ -1,8 +1,8 @@
 import './App.css';
 import React from "react";
 import { Route } from "react-router-dom";
-import Welcome from './components/welcome/welcome'
-import Home from './components/home/home'
+import InitialWelcomePage from './components/initialWelcomePage/initialWelcomePage'
+import HomeRender from './components/homeRender/homeRender'
 
 
 
@@ -10,8 +10,8 @@ import Home from './components/home/home'
 function App() {
   return (
      <div>
-       <Route exact path="/" component={Welcome}/>
-       <Route path="/home" component={Home}/>
+       <Route exact path="/" component={InitialWelcomePage}/>
+       <Route path="/home" component={HomeRender}/>
     </div>
   );
 }

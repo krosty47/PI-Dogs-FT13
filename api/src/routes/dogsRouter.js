@@ -52,7 +52,9 @@ router.get('/', async (req, res) => {
                 return {
                     id: el.id,
                     name: el.nameB || el.name,
-                    img: el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg',  // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
+                    img: el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
+                    weight: el.weight || el.weight.metric,
+                    height: el.height ||el.height.metric,
                     temperament: el.temperament || el.temperaments || 'This breed have a really rare temperament'// PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
                 }
             })
@@ -89,6 +91,8 @@ router.get('/', async (req, res) => {
                     id: el.id,
                     name: el.nameB || el.name,
                     img: image(el.reference_image_id), // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
+                    weight: el.weight || el.weight.metric,
+                    height: el.height ||el.height.metric,
                     temperament: el.temperaments || el.temperament || 'This breed have a really rare temperament' // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
                 }
             })

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './breedCard.css'
 
 
-export default function BreedCard({ name, image, temperament, id }) {
+export default function HomeBreedCard({ name, image, temperament, id }) {
 
     return (
         <div className='cards'>
@@ -12,7 +12,7 @@ export default function BreedCard({ name, image, temperament, id }) {
                 <h2>{name}</h2>
                 <p>{temperament}</p>
                 <Link to={`/detail/${id}`}>
-                    <img src={image} className='cardImage' />
+                    <img src={image} className='cardImage' alt="No cargo, al horno papurri"/>
                 </Link>
             </div>
         </div>

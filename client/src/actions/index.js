@@ -5,7 +5,7 @@ export const GET_ALL_BREEDS = "GET_ALL_BREEDS";
 export const GET_BREED_NAME = "GET_BREED_NAME";
 export const GET_DETAIL_BREED = "GET_DETAIL_BREED";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
-export const ORDER = "ORDER";
+export const FILTERS = "FILTERS";
 
 
 // ALL DOGS FROM API
@@ -18,8 +18,8 @@ export function getAllBreeds() {
 };
 
 // SPECIFIC BREED BY NAME
-export function order(nameFront, temperament, sort, order) {
-    return async (dispatch) => dispatch({ type: 'FILTERS', name: await getBreedsName(nameFront), temperament: temperament, sort: sort, order: order })
+export function filters(nameFront, temperament, sort, order) {
+    return async (dispatch) => dispatch({ type: FILTERS, name: await getBreedsName(nameFront), temperament: temperament, sort: sort, order: order })
 };
 
 // FOR DETAIL OF A BREED

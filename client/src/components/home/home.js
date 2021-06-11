@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getAllBreeds } from '../../actions/index';
 
 import HomePagination from '../homePagination/homePagination';
-import BreedCard from '../breedCard/breedCard';
+import HomeBreedCard from '../homeBreedCard/homeBreedCard';
 
 export default function Home() {
 
@@ -38,15 +37,15 @@ export default function Home() {
     // USAMOS useEffect PARA QUE LA FUNCTION EN ACTIONS "LLEVE" LA INFO A BREEDS DEL STORE, CADA VEZ QUE RENDERIZA EL COMPONENTE
 
     useEffect(() => {
-        const apiBreeds = () => { dispatch(getAllBreeds()) } // DISPATCH TO ACTION
-        apiBreeds()
-    }, [])
+        const dbBreeds = () => { dispatch(getAllBreeds()) } // DISPATCH TO ACTION
+        dbBreeds()
+    }, [dispatch])
 
     // USAMOS useEffect PARA MANEJAR EL CAMBIO EN BREEDS DEL SELECTOR Y EN PAGINATION
 
     useEffect(() => {
-        const apiBreeds = () => { setAllBreeds(breedsSelector) } // VAMOS A MODIFICAR EL SELECTOR CON UN ESTADO
-        apiBreeds()
+        const dbBreeds = () => { setAllBreeds(breedsSelector) } // VAMOS A MODIFICAR EL SELECTOR CON UN ESTADO
+        dbBreeds()
         setCurrentPage(1)  // VAMOS A CAMBIAR EL ESTADO DE LA PAGINA MODIFICANDO EL SELECTOR 
     }, [breedsSelector])   // SOLO SE VUELVE A EJECUTAR SI EL ESTADO allBreeds CAMBIO 
 
@@ -73,7 +72,7 @@ export default function Home() {
         <div className=''>
             <div className=''>
                 {currentBreeds && currentBreeds.map(el => (
-                    <BreedCard
+                    <HomeBreedCard
                         key={el.id}
                         id={el.id}
                         name={el.name}
