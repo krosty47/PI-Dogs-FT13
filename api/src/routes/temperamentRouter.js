@@ -19,7 +19,7 @@ try {
                     if (!temp.find(tp => tp.nameT === t)) {
                         temp.push({ nameT: t });
                     }
-                });
+                })
             })
         })
         .then(() => {

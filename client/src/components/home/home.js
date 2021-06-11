@@ -1,135 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAllBreeds, getBreedName, getDetailBreed, getTemperaments } from '../../actions/index';
+import { getAllBreeds } from '../../actions/index';
 
-import './home.css'
+import HomePagination from '../homePagination/homePagination';
+import BreedCard from '../breedCard/breedCard';
 
 export default function Home() {
 
-/////--------DISPATCH Y STORE------------///
-    const dispatch = useDispatch();
-    const breedName = useSelector(state => state.breeds);
-    const breedTosort = useSelector(state => state.breeds)
+    /////--------DISPATCH Y STORE-------------///
 
-// USAR OTRO SELECTOR PARA TRAER EL ESTADO
-    /////------------------------------------///
-    
-    
-    
-    /////--------BACK AND FOWARD PAGE--------///
-    const [list, setList] = useState(1)
-    const s2 = (list * 8)
-    const s1 = (s2 - 8)
-    var view = breedName.slice(s1, s2)
-    
-    const handleClickBack = (e) =>{
-        e.preventDefault()
-        if(list > 1){
-            setList(list -1)
-        }
-    };
-    //--------------------------------------///
-    
-    //------------ASC-DES-----------------///
+    const dispatch = useDispatch()
+    const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS DEL STORE
 
-    const [order, setOrder] = useState(false)
+    /////---------------------------------------///
 
-        //breedName.sort((a,b) => (a+b))
-        // const DES = breedName.sort((a,b) => (a-b))
-    
-        // PROBAR CON STATE
-        const ASCClickHandler = (e) =>{
-            e.preventDefault();
-            if(order === false)
-            breedTosort.sort(((a,b) => (a+b)))
-            dispatch(getAllBreeds())
-        };
+    /////--------HOOK PARA PAGINATION-----------///
 
-    
+    const [allBreeds, setAllBreeds] = useState([]);
 
-//----------------FORM------------------///
+    /////---------------------------------------///
 
-    const [input, setInput] = useState({
-        breed: "",
-    })
+    /////--------HOOK PARA PAGINATION ------------///
 
-    const handbleInput = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [breedPage] = useState(8);  // UN SOLO ESTADO QUE VA IR CAMBIANDO
+    const indexLastBreed = (currentPage * breedPage)
+    const indexFirstBreed = (indexLastBreed - breedPage)
+    var currentBreeds = allBreeds.slice(indexFirstBreed, indexLastBreed)
 
-    const handleDispatch = (e) => {
-        e.preventDefault();
-        input.breed ? dispatch(getBreedName(input.breed)) : alert("You must enter a valid breed name")
-    }
-//-------------------------------------///
+    // LOS ESTADOS LOS PASAMOS AL COMPONENT PAGINATION PARA SU CAMBIO
 
+    /////--------------------------------------///
 
-//-----------USE EFFECT for HOME-------///
+    console.log(currentBreeds)
+
+    // USAMOS useEffect PARA QUE LA FUNCTION EN ACTIONS "LLEVE" LA INFO A BREEDS DEL STORE, CADA VEZ QUE RENDERIZA EL COMPONENTE
 
     useEffect(() => {
-        dispatch(getAllBreeds())
-    },[]);
+        const apiBreeds = () => { dispatch(getAllBreeds()) } // DISPATCH TO ACTION
+        apiBreeds()
+    }, [])
 
-//------------------------------------///
+    // USAMOS useEffect PARA MANEJAR EL CAMBIO EN BREEDS DEL SELECTOR Y EN PAGINATION
 
+    useEffect(() => {
+        const apiBreeds = () => { setAllBreeds(breedsSelector) } // VAMOS A MODIFICAR EL SELECTOR CON UN ESTADO
+        apiBreeds()
+        setCurrentPage(1)  // VAMOS A CAMBIAR EL ESTADO DE LA PAGINA MODIFICANDO EL SELECTOR 
+    }, [breedsSelector])   // SOLO SE VUELVE A EJECUTAR SI EL ESTADO allBreeds CAMBIO 
 
+    // If the data is being fetched:
+    // if (loading) {
+    //     return (
+    //         <div>
+    //             <h1>LOADING</h1>
+    //         </div>
+    //     )
+    // }
 
-
-    return (
-        <div className='home'>
-            {/* barra de navegación */}
-
-            <li>
-                <form className='formBreeds' onSubmit={handleDispatch}>
-
-                <div>
-                    <input
-                        type='text'
-                        autoComplete='off'
-                        placeholder='Breeds'
-                        name='breed'
-                        value={input.breed}
-                        onChange={handbleInput}
-                    />
-                </div>
-                <button className='formButton' type='submit'>Search</button>
-                </form>
-            </li>
-
-
-            <div className='cards'>
-                <div>
-                    {view && view.map((el) => (
-
-                        <div className='cardBreed' key={el.id}>
-                            <h2>{el.name}</h2>
-                            <p>{el.temperament}</p>
-                            <Link to={`/detail/${el.id}`}>
-                                <img src={el.img} className='cardImage' />
-                            </Link>
-                        </div>
-
-                    ))}
-                </div>
-            </div>
-
+    // if no breed fount
+    if (!currentBreeds.length) {
+        return (
             <div>
- 
-                <button onClick={ASCClickHandler}>ASCENDING ORDER</button>
-                <button onClick={ASCClickHandler}>DESCENDING ORDER</button>
-
+                We couldn't find that dog!
             </div>
+        )
+    }
 
-            <div className='listPages'>
-                <button onClick={handleClickBack}>Backward</button>
-                <button>{list}</button>
-                <button onClick={() => setList(list + 1)}>Forward</button>
+    // if breed found
+    return (
+        <div className=''>
+            <div className=''>
+                {currentBreeds && currentBreeds.map(el => (
+                    <BreedCard
+                        key={el.id}
+                        id={el.id}
+                        name={el.name}
+                        image={el.img}
+                        temperament={el.temperament}
+                    />
+                ))}
             </div>
-
+            <HomePagination
+                breedPage={breedPage}
+                allBreeds={allBreeds.length}
+                setCurrentPage={setCurrentPage}
+            />
         </div>
     )
 };

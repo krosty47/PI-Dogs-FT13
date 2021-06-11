@@ -5,42 +5,46 @@ export const GET_ALL_BREEDS = "GET_ALL_BREEDS";
 export const GET_BREED_NAME = "GET_BREED_NAME";
 export const GET_DETAIL_BREED = "GET_DETAIL_BREED";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
+export const ORDER = "ORDER";
 
 
-
-export function getAllBreeds(){
-    return (dispatch) =>{
-        axios.get('http://localhost:3001/dogs').then(response =>{
-            dispatch({type: GET_ALL_BREEDS, payload: response.data })
+// ALL DOGS FROM API
+export function getAllBreeds() {
+    return (dispatch) => {
+        axios.get('http://localhost:3001/dogs').then(response => {
+            dispatch({ type: GET_ALL_BREEDS, payload: response.data })
         })
     }
 };
 
-export function getBreedName(nameFront){
-    return (dispatch) =>{
-        axios.get(`http://localhost:3001/dogs?nameFront=${nameFront}`).then(response =>{
-            dispatch({type: GET_BREED_NAME, payload: response.data })
+// SPECIFIC BREED BY NAME
+export function order(nameFront, temperament, sort, order) {
+    return async (dispatch) => dispatch({ type: 'FILTERS', name: await getBreedsName(nameFront), temperament: temperament, sort: sort, order: order })
+};
+
+// FOR DETAIL OF A BREED
+export function getDetailBreed(idBreed) {
+    return (dispatch) => {
+        axios.get(`http://localhost:3001/dogs/detail/${idBreed}`).then(response => {
+            dispatch({ type: GET_DETAIL_BREED, payload: response.data })
+        })
+    }
+};
+// TEMPERAMENTS
+export function getTemperaments() {
+    return (dispatch) => {
+        axios.get(`http://localhost:3001/temperament`).then(response => {
+            dispatch({ type: GET_TEMPERAMENTS, payload: response.data })
         })
     }
 };
 
-export function getDetailBreed(idBreed){
-    return (dispatch) =>{
-        axios.get(`http://localhost:3001/dogs/detail/${idBreed}`).then(response =>{
-            dispatch({type: GET_DETAIL_BREED, payload: response.data })
-        })
-    }
-};
 
-
-export function getTemperaments(){
-    return (dispatch) =>{
-        axios.get(`http://localhost:3001/temperament`).then(response =>{
-            dispatch({type: GET_TEMPERAMENTS, payload: response.data })
-        })
-    }
-};
-
+const getBreedsName = async function (nameFront) {
+    const response = await axios.get(`http://localhost:3001/dogs?nameFront=${nameFront}`);
+    const breeds = response.data;
+    return breeds
+}
 
 
 

@@ -7,6 +7,7 @@ router.post('/', async (req, res, next) => {
     //let name = req.body.name.toLowerCase();
     const { nameB, weight, height, years, nameT } = req.body;
 
+
     try {
         let newRaza = await Breeds.create({
             nameB,
