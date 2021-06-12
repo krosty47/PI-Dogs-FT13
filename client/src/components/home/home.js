@@ -7,30 +7,36 @@ import HomeBreedCard from '../homeBreedCard/homeBreedCard';
 
 export default function Home() {
 
-    /////--------DISPATCH Y STORE-------------///
+    /////----------DISPATCH Y STORE-------------///
 
     const dispatch = useDispatch()
     const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS DEL STORE
-
+    
     /////---------------------------------------///
 
-    /////--------HOOK PARA PAGINATION-----------///
+    /////--------HOOK TO DISPLAY BREEDS---------///
 
     const [allBreeds, setAllBreeds] = useState([]);
 
     /////---------------------------------------///
 
-    /////--------HOOK PARA PAGINATION ------------///
+    /////--------HOOKS FOR PAGINATION ----------///
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [breedPage] = useState(8);  // UN SOLO ESTADO QUE VA IR CAMBIANDO
-    const indexLastBreed = (currentPage * breedPage)
-    const indexFirstBreed = (indexLastBreed - breedPage)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage] = useState(8)
+
+    const [pageNumberLimit] = useState(5)
+    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
+    const [minPageNumberLimit, setminPageNumberLimit] = useState(0)
+
+    const indexLastBreed = (currentPage * itemsPerPage)
+    const indexFirstBreed = (indexLastBreed - itemsPerPage)
     var currentBreeds = allBreeds.slice(indexFirstBreed, indexLastBreed)
 
     // LOS ESTADOS LOS PASAMOS AL COMPONENT PAGINATION PARA SU CAMBIO
 
     /////--------------------------------------///
+    
 
     console.log(currentBreeds)
 
@@ -82,9 +88,15 @@ export default function Home() {
                 ))}
             </div>
             <HomePagination
-                breedPage={breedPage}
-                allBreeds={allBreeds.length}
+                pageNumberLimit={pageNumberLimit}
+                itemsPerPage={itemsPerPage}
+                allBreeds={allBreeds}
+                currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                maxPageNumberLimit={maxPageNumberLimit}
+                setMaxPageNumberLimit={setMaxPageNumberLimit}
+                minPageNumberLimit={minPageNumberLimit}
+                setminPageNumberLimit={setminPageNumberLimit}
             />
         </div>
     )

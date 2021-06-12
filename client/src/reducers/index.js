@@ -13,28 +13,24 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_BREEDS:
             return {
                 ...state,
-                breeds: action.payload.sort((a, b) => {
-                    if (a.name < b.name) return -1
-                    if (a.name > b.name) return 1
-                    if (a.name === b.name) return 0
-                    return 0
-                })
+                breeds: action.payload
             };
+
         case FILTERS:
             if (action.type === FILTERS) {
-                let filteredDogs = undefined;
-                // FILTER DOGS
+                let filteredBreeds= undefined;
+                // FILTER BREEDS
                 if(action.temperament === 'Select Temperaments') {
-                    filteredDogs = action.name
-                    console.log("LLEGO ACA?",filteredDogs)
+                    filteredBreeds = action.name
+                    console.log("LLEGO ACA?",filteredBreeds)
                 }
                 else {
-                    filteredDogs = action.name.filter(dog => dog.temperament? dog.temperament.includes(action.temperament): null)
+                    filteredBreeds = action.name.filter(b => b.temperament? b.temperament.includes(action.temperament): null)
                 }
                 
-                // SORT DOGS
+                // SORT BREEDS
                 if(action.sort === 'weight') {
-                    filteredDogs.sort((a,b) => {
+                    filteredBreeds.sort((a,b) => {
                         if(a.weight) {
                             let weights = a.weight.split(' - ')
                             var amin = Number(weights[0])
@@ -51,24 +47,24 @@ const rootReducer = (state = initialState, action) => {
         
                         return amin - bmin
                     })
-                    if(action.order === 'descending') filteredDogs.reverse();
+                    if(action.order === 'descending') filteredBreeds.reverse();
                     return {
                         ...state,
-                        breeds: filteredDogs
+                        breeds: filteredBreeds
                     }
                 }
                 
                 if(action.sort === 'name') {
-                    filteredDogs.sort((a,b) => {
+                    filteredBreeds.sort((a,b) => {
                         if(a.name.toLowerCase() < b.name.toLowerCase()) return -1
                         if(a.name.toLowerCase() > b.name.toLowerCase()) return 1
                         if(a.name.toLowerCase() === b.name.toLowerCase()) return 0
                         return 0
                     })
-                    if(action.order === 'descending') filteredDogs.reverse();
+                    if(action.order === 'descending') filteredBreeds.reverse();
                     return {
                         ...state,
-                        breeds: filteredDogs
+                        breeds: filteredBreeds
                     }
                 } 
             }

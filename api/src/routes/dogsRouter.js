@@ -20,8 +20,8 @@ const {
 
 
 
-let image = (a) => {
-    if (a === undefined) {
+let image = (ref) => {
+    if (ref === undefined) {
         return 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg'
     } else {
         return `https://cdn2.thedogapi.com/images/${a}.jpg`
@@ -53,13 +53,13 @@ router.get('/', async (req, res) => {
                     id: el.id,
                     name: el.nameB || el.name,
                     img: el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
-                    weight: el.weight || el.weight.metric,
+                    weight: el.weight.metric ||el.weight,
                     height: el.height ||el.height.metric,
                     temperament: el.temperament || el.temperaments || 'This breed have a really rare temperament'// PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
                 }
             })
             // SORT : SI COMPARAMOS 1RA OPCION MAYOR, TENEMOS QUE RETORNAR 1 PARA ORDENAR POR KEY NAME
-            //final8Result.sort((a, z) => (a.name > z.name) ? 1 : -1)
+            final8Result.sort((a, z) => (a.name > z.name) ? 1 : -1)
 
             console.log("LLEGUE A !NAME")
             res.json(final8Result)
@@ -91,8 +91,8 @@ router.get('/', async (req, res) => {
                     id: el.id,
                     name: el.nameB || el.name,
                     img: image(el.reference_image_id), // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
-                    weight: el.weight || el.weight.metric,
-                    height: el.height ||el.height.metric,
+                    weight: el.weight.metric ||el.weight,
+                    height: el.height.metric ||el.height,
                     temperament: el.temperaments || el.temperament || 'This breed have a really rare temperament' // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
                 }
             })
@@ -145,6 +145,7 @@ router.get('/detail/:idBreed', async (req, res) => {
 
         if (breed.nameB) {
             return res.json({
+                
                 name: breed.nameB,
                 temperament: breed.temperaments,
                 weight: breed.weight,
