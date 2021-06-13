@@ -5,6 +5,8 @@ import { Route } from "react-router-dom";
 import InitialWelcomePage from './components/initialWelcomePage/initialWelcomePage'
 import HomeRender from './components/homeRender/homeRender'
 import BreedDetail from './components/breedDetail/breedDetail'
+import BreedCreation from './components/breedCreation/breedCreation'
+import NavBar from './components/navBar/navBar'
 
 
 
@@ -12,9 +14,11 @@ import BreedDetail from './components/breedDetail/breedDetail'
 function App() {
   return (
      <div>
-       <Route exact path='/home' component={HomeRender}/>
+       <Route path='/:something' component={NavBar}/>
        <Route exact path='/' component={InitialWelcomePage}/>
+       <Route exact path='/home' component={HomeRender}/>
        <Route exact path='/detail/:id' component={BreedDetail}/>
+       <Route exact path='/createBreed' component={BreedCreation}/>
     </div>
   );
 }

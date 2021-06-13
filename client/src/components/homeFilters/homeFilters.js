@@ -36,7 +36,7 @@ export default function HomeFilters() {
                         </select>
                         <select id='searchByTemperament' className=''>
                             <option value='Select Temperaments'>Temperament</option>
-                            {temperaments.map(t => (<option key={t.id} value={`${t.nameT}`}>{t.nameT}</option>))}
+                            {temperaments && temperaments.map(t => (<option key={t.id} value={`${t.nameT}`}>{t.nameT}</option>))}
                         </select>
                     </div>
                 </div>

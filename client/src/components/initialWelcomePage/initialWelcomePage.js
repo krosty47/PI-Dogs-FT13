@@ -1,16 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import '../initialWelcomePage/initialWelcomePage.css'
+
 export default function InitialWelcomePage () {
     return (
-        <header>
-            <div>
-                <h2>JEJE</h2>
+        <center className='allWelcome'>
 
-                <Link to='/home'>HOLA GORDA HERMOSA</Link>
+                <h1 className='welcomeTitle'>wanna aDOGt</h1>
 
-            </div>
+                <div className='welcomeImage'></div>
 
-        </header>
+                <p className='welcomeInfo1'>All the information you need before addopting a dog</p>
+
+                <div className='welcomeLink'>
+                <Link to='/home'>SHOW ME MORE</Link>
+                </div>
+
+        </center>
     )
 }

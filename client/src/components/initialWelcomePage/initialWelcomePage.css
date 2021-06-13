@@ -1,0 +1,42 @@
+.allWelcome{
+    height: 100vh;
+    border: 3px solid rgb(216, 75, 75);
+    background: url('./welcome2.png');
+    background-repeat: no-repeat;
+    background-size: 1200px 500px;
+    background-position: center;
+    
+}
+
+.welcomeTitle{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcomeInfo1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcomeLink{
+    margin: 33%;
+    color: rgb(3, 3, 3);
+    font-size: 200%;
+    margin-bottom: 5%;
+    position: relative;
+}
+
+/* .welcomeImage{
+    background-image: url('./welcome2.png');
+    
+    width:1000px;
+    height:600px;
+    display:block;
+    margin:auto;
+
+} */
+
