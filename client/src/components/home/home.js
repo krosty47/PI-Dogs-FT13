@@ -5,6 +5,8 @@ import { getAllBreeds } from '../../actions/index';
 import HomePagination from '../homePagination/homePagination';
 import HomeBreedCard from '../homeBreedCard/homeBreedCard';
 
+import '../home/home.css'
+
 export default function Home() {
 
     /////----------DISPATCH Y STORE-------------///
@@ -75,8 +77,8 @@ export default function Home() {
 
     // if breed found
     return (
-        <div className=''>
-            <div className=''>
+        <div className='outBreed'>
+            <div className='cardsPosition'>
                 {currentBreeds && currentBreeds.map(el => (
                     <HomeBreedCard
                         key={el.id}

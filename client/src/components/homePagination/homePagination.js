@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+import '../homePagination/homePagination.css'
 
 export default function HomePagination({ allBreeds, pageNumberLimit, setCurrentPage, itemsPerPage, maxPageNumberLimit, minPageNumberLimit, currentPage, setMaxPageNumberLimit, setminPageNumberLimit }) {
 
@@ -54,7 +54,7 @@ export default function HomePagination({ allBreeds, pageNumberLimit, setCurrentP
 
 
     return (
-        <div className=''>
+        <div className='homePagination'>
             <div className=''>
                 <li>
                     <button onClick={() => prev()} disabled={currentPage === paginationNumber[0] ? true : false}>Prev</button>

@@ -1,0 +1,15 @@
+.cards{
+    display:inline-block;
+    border: 1px solid #000000;
+}
+.cardImage{
+    border: 2px solid #000000;
+    width: 400px;
+    height: 230px;
+}
+
+.cardTemps{
+    border: 2px solid #000000;
+    width: 400px;
+    height: 40px;
+}

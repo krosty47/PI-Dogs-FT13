@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { filters, getTemperaments } from '../../actions/index';
 
+import '../homeFilters/homeFilters.css'
+
 export default function HomeFilters() {
 
     const dispatch = useDispatch()
     const temperaments = useSelector(state => state.temperaments)
 
 
-    const orderBreeds = function (name, temperament, sort, order){
+    const orderBreeds = function (name, temperament, sort, order) {
         dispatch(filters(name, temperament, sort, order))
     }
 
@@ -18,15 +20,24 @@ export default function HomeFilters() {
         dbTemperaments()
     }, [dispatch])
 
+    const onSubmitSearch = (e) =>{
+        e.preventDefault();
+        orderBreeds(document.getElementById('searchByName').value, document.getElementById('searchByTemperament').value, document.getElementById('sort').value, document.getElementById('order').value)
+    }
 
     return (
         <>
-            <div className=''>
-
-                <div className=''>
-                    <h1 className=''>Sort by</h1>
-                    <div className=''>
-                        <select id='sort' className=''>
+            <div className='homeFilters'>
+                <div className='searchB'>
+                    <form onSubmit={onSubmitSearch}>
+                    <button className='searchButton' type='submit'>SEARCH: </button>
+                    <input id='searchByName' type='text' className='searchInput'></input>
+                    </form>
+                </div>
+                <div className='sortByDiv'>
+                    <h1 className='sortBy'>SORT BY</h1>
+                    <div className='sortByInsideDiv'>
+                        <select id='sort' className='sortSelect'>
                             <option value='name'>Name</option>
                             <option value='weight'>Weight</option>
                         </select>
@@ -40,12 +51,7 @@ export default function HomeFilters() {
                         </select>
                     </div>
                 </div>
-                <div className=''>
-                    <input id='searchByName' className=''></input>
-                    <button className='' onClick={() => orderBreeds(document.getElementById('searchByName').value, document.getElementById('searchByTemperament').value, document.getElementById('sort').value, document.getElementById('order').value)}>Search</button>
-                </div>
             </div>
-            <hr className='' />
         </>
     )
 }

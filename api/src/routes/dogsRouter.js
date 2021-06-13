@@ -24,7 +24,7 @@ let image = (ref) => {
     if (ref === undefined) {
         return 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg'
     } else {
-        return `https://cdn2.thedogapi.com/images/${a}.jpg`
+        return `https://cdn2.thedogapi.com/images/${ref}.jpg`
     }
 }
 

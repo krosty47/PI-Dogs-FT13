@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import './breedCard.css'
+import '../homeBreedCard/homeBreedCard.css'
 
 
 export default function HomeBreedCard({ name, image, temperament, id }) {
@@ -10,7 +10,7 @@ export default function HomeBreedCard({ name, image, temperament, id }) {
         <div className='cards'>
             <div className='cardBreed' key={id}>
                 <h2>{name}</h2>
-                <p>{temperament}</p>
+                <p className='cardTemps'>{temperament}</p>
                 <Link to={`/detail/${id}`}>
                     <img src={image} className='cardImage' alt="No cargo, al horno papurri"/>
                 </Link>
