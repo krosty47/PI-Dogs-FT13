@@ -4,11 +4,10 @@
     background:#EADDCD;
     padding:0px;
     margin:0px;
-
+    color: #593E35
 }
 /* DIV BUSQUEDA, INPUT Y BOTON BUSQUEDA*/
 .searchB{
-
     height: 100%;
 }
 /* DIV BUSQUEDA */
@@ -16,12 +15,15 @@
     width: 90%;
     height: 30px;
     padding: 2px;
+    border: 1px solid #593E35;
+    border-radius: 5px; 
 }
 
 /* INPUT BUSQUEDA */
 .searchInput[type="text"]{
     font-size:24px;
     background-color: #FFFCF7;
+    color: #593E35
 }
 
 /* BOTON BUSQUEDA */
@@ -30,38 +32,40 @@
     font-size:22px;
     padding: 10px 25px;
     background: transparent;
-    cursor: pointer;
     border: none;
+    cursor: pointer;
+    color: #593E35
 }
 /*--------------------------*/
 
 
 /* DIV DE ORDENAMIENTOS CON SORT BY */
 .sortByDiv{
-
     position: absolute;
     width: 400px;
-    height: 600px;
+    height: 800px;
+    top: 45%
 }
 
 .sortBy{
     font-size:22px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
+    position:relative;
+    left:7%;
+    bottom:20%
 }
 
 /* DIV DE ORDENAMIENTOS */
 .sortByInsideDiv{
-
     width: 400px;
-    height: 600px;
+    height: 800px;
 }
 
 /* SORT SELECT */
 .sortSelect{
+    color: #593E35;
     position: relative;
-    left:30%;
+    bottom:20%;
+    left:5%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -89,9 +93,10 @@
 /* ORDER SELECT */
 
 .orderSelect{
+    color: #593E35;
     position:relative;
-    top: 15%;
-    right: 8%;
+    bottom: 12%;
+    right: 33%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -119,9 +124,10 @@
 /* TEMPERAMENT SELECT */
 
 .tempSelect{
+    color: #593E35;
     position:relative;
-    top: 24%;
-    left: 29%;
+    bottom: 9%;
+    left: 4.5%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -153,5 +159,20 @@
     font-size: 16px;
 }
 
+/* INFORMATION BOX*/
 
-
+.filtersInfo{
+    border: 2px solid #593E35;
+    font-size: 18px;
+    border-radius: 10px;
+    width: 325px;
+    height: 155px;
+    position: relative;
+    left:5%;
+    bottom: 20.8%;
+    background-color: #FFFCF7;
+    color: #593E35;
+    line-height: 30px;
+    padding: 20px;
+    text-align: justify;
+}

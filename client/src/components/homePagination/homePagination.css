@@ -3,3 +3,70 @@
     padding:0px;
     margin:0px;
 }
+
+.buttonsPagination{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin:0px;
+    padding: 10px;
+    list-style: none;
+    border-radius: 50px;
+    width: 600px;
+    position: relative;
+    bottom:50%;
+    left:30%;
+}
+
+.buttonsBox{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    list-style: none;
+    width: 200px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.buttonsP{
+    background-color: #FFFCF7;
+    color: #593E35;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 18px;
+    height: 35px;
+    width: 35px;
+    cursor:pointer;
+    margin:2px;
+}
+
+
+.PrevB{
+    background-color: #FFFCF7;
+    color: #593E35;
+    font-size: 18px;
+    height: 35px;
+    width: 68px;
+    cursor:pointer;
+    border: 1px solid black;
+    border-radius: 25px 5px 5px 25px;
+}
+.NextB{
+    background-color: #FFFCF7;
+    color: #593E35;
+    font-size: 18px;
+    height: 35px;
+    width: 68px;
+    cursor:pointer;
+    border: 1px solid black;
+    border-radius: 5px 25px 25px 5px;
+}
+
+.buttonsL{
+    color: #593E35;
+    font-size: 18px;
+    height: 17px;
+    width: 17px;
+    cursor:default;
+}

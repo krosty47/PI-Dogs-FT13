@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { getDetailBreed } from '../../actions/index';
+
+import '../breedDetail/breedDetail.css'
 
 export default function BreedDetail({match}) {
 
@@ -25,21 +26,16 @@ export default function BreedDetail({match}) {
 
 
     return (
-        <div>
+        <div className='AllCardDetail'>
             <h1>{oneBreed.name}</h1>
 
             <div>
-                <img src={oneBreed.img} alt='img not found'></img>
+                <img className='cardDetailImage' src={oneBreed.img} alt='img not found'></img>
             </div>
             <h3>WEIGHT: ({oneBreed.weight})</h3>
             <h3>HEIGHT: ({oneBreed.height})</h3>
             <h3>LIFE SPAN: ({oneBreed.life_span})</h3>
             <h3>TEMPERAMENTS: ({temperaments.join(', ')})</h3>
-            <div>
-                {temperaments.map( t =>(
-                    <div key={t}>{t}</div>
-                ))}
-            </div>
         </div>
     )
 }

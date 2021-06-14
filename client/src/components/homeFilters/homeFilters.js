@@ -20,7 +20,7 @@ export default function HomeFilters() {
         dbTemperaments()
     }, [dispatch])
 
-    const onSubmitSearch = (e) =>{
+    const onSubmitSearch = (e) => {
         e.preventDefault();
         orderBreeds(document.getElementById('searchByName').value, document.getElementById('searchByTemperament').value, document.getElementById('sort').value, document.getElementById('order').value)
     }
@@ -30,11 +30,12 @@ export default function HomeFilters() {
             <div className='homeFilters'>
                 <div className='searchB'>
                     <form onSubmit={onSubmitSearch}>
-                    <button className='searchButton' type='submit'>SEARCH: </button>
-                    <input id='searchByName' type='text' className='searchInput'></input>
+                        <button className='searchButton' type='submit'>SEARCH: </button>
+                        <input id='searchByName' type='text' className='searchInput'></input>
                     </form>
                 </div>
                 <div className='sortByDiv'>
+                <div className='filtersInfo'>There are many breeds of dog and each one has specific characteristics. Before adopting, check out this page to find the one that matches you completely!</div>
                     <h1 className='sortBy'>SORT BY</h1>
                     <div className='sortByInsideDiv'>
                         <select id='sort' className='sortSelect'>

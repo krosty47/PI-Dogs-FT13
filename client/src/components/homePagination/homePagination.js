@@ -15,7 +15,7 @@ export default function HomePagination({ allBreeds, pageNumberLimit, setCurrentP
         if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {
             return ( // MAP MUESTRA UN BOTON POR CADA ELEMENTO DE paginationNumber
                 <div key={number}>
-                    <button className='' onClick={() => paginate(number)}>
+                    <button className='buttonsP' onClick={() => paginate(number)}>
                         {number}
                     </button>
                 </div>
@@ -45,27 +45,25 @@ export default function HomePagination({ allBreeds, pageNumberLimit, setCurrentP
 
     let pageIncrementBtn = null;
     if (paginationNumber.length > maxPageNumberLimit) {
-        pageIncrementBtn = <li onClick={() => next()}>...</li>
+        pageIncrementBtn = <li className='buttonsL' onClick={() => next()}>....</li>
     }
     let pageDecrementBtn = null;
     if (minPageNumberLimit >= 1) {
-        pageDecrementBtn = <li onClick={() => prev()}>...</li>
+        pageDecrementBtn = <li className='buttonsL' onClick={() => prev()}>....</li>
     }
 
 
     return (
         <div className='homePagination'>
-            <div className=''>
-                <li>
-                    <button onClick={() => prev()} disabled={currentPage === paginationNumber[0] ? true : false}>Prev</button>
-                </li>
+                <ul className='buttonsPagination'>
+                    <button className='PrevB' onClick={() => prev()} disabled={currentPage === paginationNumber[0] ? true : false}>PREV</button>
                 {pageDecrementBtn}
+                <li className='buttonsBox'>
                 {renderPage}
-                {pageIncrementBtn}
-                <li>
-                    <button onClick={() => next()} disabled={currentPage === paginationNumber[paginationNumber.length - 1] ? true : false}>Next</button>
                 </li>
-            </div>
+                {pageIncrementBtn}
+                    <button className='NextB' onClick={() => next()} disabled={currentPage === paginationNumber[paginationNumber.length - 1] ? true : false}>NEXT</button>
+                </ul>
         </div>
     )
 }
