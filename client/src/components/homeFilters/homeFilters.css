@@ -1,24 +1,27 @@
+/* DIV TOTAL BUSQUEDA Y FILTROS*/
+
 .homeFilters{
     background:#EADDCD;
     padding:0px;
     margin:0px;
-    border: 1px solid #000000;
-}
 
+}
+/* DIV BUSQUEDA, INPUT Y BOTON BUSQUEDA*/
 .searchB{
-    border: 1px solid #000000;
+
     height: 100%;
 }
 /* DIV BUSQUEDA */
 .searchInput{
     width: 90%;
     height: 30px;
+    padding: 2px;
 }
 
 /* INPUT BUSQUEDA */
 .searchInput[type="text"]{
     font-size:24px;
-    background: #FFFCF7;
+    background-color: #FFFCF7;
 }
 
 /* BOTON BUSQUEDA */
@@ -35,9 +38,9 @@
 
 /* DIV DE ORDENAMIENTOS CON SORT BY */
 .sortByDiv{
-    border: 2px solid #000000;
+
     position: absolute;
-    width: 530px;
+    width: 400px;
     height: 600px;
 }
 
@@ -50,7 +53,105 @@
 
 /* DIV DE ORDENAMIENTOS */
 .sortByInsideDiv{
-    border: 2px solid #000000;
-    width: 530px;
+
+    width: 400px;
     height: 600px;
 }
+
+/* SORT SELECT */
+.sortSelect{
+    position: relative;
+    left:30%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 150px;
+    padding: 10px 4px;
+    background-color: #FFFCF7;
+    font-weight: 600;
+    font-size:16px;
+    text-align-last: center;
+    letter-spacing:2px;
+    cursor:pointer;
+    border: 6px #FFFCF7;
+    border-radius:5px;
+    box-shadow:0 0 20px rgba(20,20,30,0.25)
+}
+
+.sortSelect::-ms-expand{
+    display:none;
+}
+
+/* .sortSelect:hover{
+    border:3px solid #000000;
+} */
+
+/* ORDER SELECT */
+
+.orderSelect{
+    position:relative;
+    top: 15%;
+    right: 8%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 150px;
+    padding: 10px 4px;
+    background-color: #FFFCF7;
+    font-weight: 600;
+    font-size:16px;
+    text-align-last: center;
+    letter-spacing:2px;
+    cursor:pointer;
+    border: 6px #FFFCF7;
+    border-radius:5px;
+    box-shadow:0 0 20px rgba(20,20,30,0.25);
+}
+
+.orderSelect::-ms-expand{
+    display:none;
+}
+
+/* .orderSelect:hover{
+    border:3px solid #000000;
+} */
+
+/* TEMPERAMENT SELECT */
+
+.tempSelect{
+    position:relative;
+    top: 24%;
+    left: 29%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 150px;
+    padding: 10px 4px;
+    background-color: #FFFCF7;
+    font-weight: 600;
+    font-size:16px;
+    text-align-last: center;
+    letter-spacing:2px;
+    cursor:pointer;
+    border: 6px #FFFCF7;
+    border-radius:5px;
+    box-shadow:0 0 20px rgba(20,20,30,0.25)
+}
+
+.tempSelect::-ms-expand{
+    display:none;
+}
+
+/* .tempSelect:hover{
+    border:3px solid #000000;
+} */
+
+.selectOption{
+    background-color: #FFFCF7;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+
+

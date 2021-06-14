@@ -38,15 +38,15 @@ export default function HomeFilters() {
                     <h1 className='sortBy'>SORT BY</h1>
                     <div className='sortByInsideDiv'>
                         <select id='sort' className='sortSelect'>
-                            <option value='name'>Name</option>
-                            <option value='weight'>Weight</option>
+                            <option className='selectOption' value='name'>Name</option>
+                            <option className='selectOption' value='weight'>Weight</option>
                         </select>
-                        <select id='order' className=''>
-                            <option value='ascending'>Ascending</option>
-                            <option value='descending'>Descending</option>
+                        <select id='order' className='orderSelect'>
+                            <option className='selectOption' value='ascending'>Ascending</option>
+                            <option className='selectOption' value='descending'>Descending</option>
                         </select>
-                        <select id='searchByTemperament' className=''>
-                            <option value='Select Temperaments'>Temperament</option>
+                        <select id='searchByTemperament' className='tempSelect'>
+                            <option className='selectOption' value='Select Temperaments'>Temperament</option>
                             {temperaments && temperaments.map(t => (<option key={t.id} value={`${t.nameT}`}>{t.nameT}</option>))}
                         </select>
                     </div>
