@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { getAllBreeds, getTemperaments } from '../../actions/index';
 
+import '../breedCreation/breedCreation.css'
+
 
 export default function BreedCreation() {
 
@@ -44,15 +46,18 @@ export default function BreedCreation() {
                 nameT: [],
             })
         })
-            .catch(res => alert('Something went wrong, please try again.'))
+            .catch(res => alert('The breed already exist. Please try with other name.'))
     }
 
     function handleTemperamentSelect(e) {
-        if (input.nameT.includes(e.target.value)) {
-            
-         }
+        if (input.nameT.length === 0) {
+            alert('You add 1 temperament!')
+        }
+        if (input.nameT.length === 1) {
+            alert('You add 2 temperament!')
+        }
         if (input.nameT.length >= 3) {
-            alert('You can select up to 3 temperaments.')
+            alert('The last was added')
         }
         else {
             setInput({
@@ -61,21 +66,25 @@ export default function BreedCreation() {
             })
         }
     }
-    
-    
+
+
     return (
-        <div>
-            <h1 className=''>Create Breed</h1>
-            <form onSubmit={handleSubmit}>
-                <input value={input.name} name='nameB' type='text' required="required" placeholder='  Name' onChange={handleInputChange}></input>
-                <input value={input.weight} name='weight' type='text' required="required" placeholder='  Weight' onChange={handleInputChange}></input>
-                <input value={input.height} name='height' type='text' required="required" placeholder='  Height' onChange={handleInputChange}></input>
-                <input value={input.years} name='years' type='text' required="required" placeholder='  Life_span' onChange={handleInputChange}></input>
-                <select name='nameT' required="required" onChange={handleTemperamentSelect}>
+        <div className='backGCreate'>
+            <form className='createCard' onSubmit={handleSubmit}>
+                <p>ENTER NAME</p>
+                <input className='createName' value={input.name} name='nameB' type='text' required="required" placeholder='Name' onChange={handleInputChange}></input>
+                <p>ENTER WEIGHT</p>
+                <input className='createWeight' value={input.weight} name='weight' type='number' required="required" placeholder='Weight' onChange={handleInputChange}></input>
+                <p>ENTER HEIGHT</p>
+                <input className='createHeight' value={input.height} name='height' type='number' required="required" placeholder='Height' onChange={handleInputChange}></input>
+                <p>ENTER LIFE_SPAN</p>
+                <input className='createYears' value={input.years} name='years' type='number' required="required" placeholder='Life_span' onChange={handleInputChange}></input>
+                <p>SELECT TEMPERAMENTS (UP TO 3)</p>
+                <select className='createTemps' name='nameT' required="required" onChange={handleTemperamentSelect}>
                     <option value=''>Add Temperaments</option>
                     {temperaments && temperaments.map(t => (<option key={t.id} value={`${t.id}`}>{t.nameT}</option>))}
                 </select>
-                <input className='' type='submit' value='Create'></input>
+                <input className='createButton' type='submit' value='CREATE'></input>
             </form>
         </div>
     )

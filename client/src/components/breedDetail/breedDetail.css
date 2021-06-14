@@ -1,4 +1,10 @@
+.backGDetail{
+    background-color: #EADDCD;
+    height: 782px;
+}
 .AllCardDetail{
+    background-color: #FFFCF7;
+    color: #593E35;
     border: 2px solid #000000;
     width: 800px;
     height: 700px;
@@ -11,11 +17,9 @@
     text-align:center;
     transition: all 0.25s;
     position: relative;
-    left: 50%;
-    bottom: 20%;
+    left: 47%;
     transform: translateX(-50%);
 }
-
 
 .cardDetailImage{
     border: 1px solid #000000;

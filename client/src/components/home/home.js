@@ -9,11 +9,12 @@ import '../home/home.css'
 
 export default function Home() {
 
+
     /////----------DISPATCH Y STORE-------------///
 
     const dispatch = useDispatch()
     const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS DEL STORE
-    
+
     /////---------------------------------------///
 
     /////--------HOOK TO DISPLAY BREEDS---------///
@@ -38,7 +39,7 @@ export default function Home() {
     // LOS ESTADOS LOS PASAMOS AL COMPONENT PAGINATION PARA SU CAMBIO
 
     /////--------------------------------------///
-    
+
 
     console.log(currentBreeds)
 
@@ -57,20 +58,10 @@ export default function Home() {
         setCurrentPage(1)  // VAMOS A CAMBIAR EL ESTADO DE LA PAGINA MODIFICANDO EL SELECTOR 
     }, [breedsSelector])   // SOLO SE VUELVE A EJECUTAR SI EL ESTADO allBreeds CAMBIO 
 
-    // If the data is being fetched:
-    // if (loading) {
-    //     return (
-    //         <div>
-    //             <h1>LOADING</h1>
-    //         </div>
-    //     )
-    // }
-
-    // if no breed fount
-    if (!currentBreeds.length) {
+    if (!breedsSelector.length) {
         return (
-            <div>
-                We couldn't find that dog!
+            <div className='notBreedFound'>
+                LOADING...
             </div>
         )
     }

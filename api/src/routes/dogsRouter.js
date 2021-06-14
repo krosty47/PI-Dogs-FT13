@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
                 }
             })
             // SORT : SI COMPARAMOS 1RA OPCION MAYOR, TENEMOS QUE RETORNAR 1 PARA ORDENAR POR KEY NAME
-            final8Result.sort((a, z) => (a.name > z.name) ? 1 : -1)
+            final8Result.sort((a, z) => (a.name.toLowerCase() > z.name.toLowerCase()) ? 1 : -1)
 
             console.log("LLEGUE A !NAME")
             res.json(final8Result)
@@ -97,7 +97,7 @@ router.get('/', async (req, res) => {
                 }
             })
 
-            finalQueryResult.sort((a, z) => (a.name > z.name) ? 1 : -1)
+            finalQueryResult.sort((a, z) => (a.name.toLowerCase() > z.name.toLowerCase()) ? 1 : -1)
 
             console.log("LLEGUE A BUSCAR UNO O MAS")
             return res.json(finalQueryResult)
@@ -145,7 +145,7 @@ router.get('/detail/:idBreed', async (req, res) => {
 
         if (breed.nameB) {
             return res.json({
-                
+                img: 'https://random.dog/', // AGREGAR SOLO LA IMAGEN ACA
                 name: breed.nameB,
                 temperament: breed.temperaments,
                 weight: breed.weight,

@@ -25,6 +25,7 @@ export default function HomeFilters() {
         orderBreeds(document.getElementById('searchByName').value, document.getElementById('searchByTemperament').value, document.getElementById('sort').value, document.getElementById('order').value)
     }
 
+
     return (
         <>
             <div className='homeFilters'>
