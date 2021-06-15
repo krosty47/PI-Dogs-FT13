@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { Breeds, Temperaments } = require('../db');
+const { Breeds } = require('../db');
 const { v4: uuidv4 } = require('uuid');
+
 
 router.post('/', async (req, res, next) => {
 
@@ -28,5 +29,11 @@ router.post('/', async (req, res, next) => {
         next(err);
     }
 });
+
+router.post('/upload', (req, res, next) => {
+
+    console.log(req.file)
+    res.send('Enviar Data')
+})
 
 module.exports = router;

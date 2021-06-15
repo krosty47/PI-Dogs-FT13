@@ -86,6 +86,10 @@ export default function BreedCreation() {
                 </select>
                 <input className='createButton' type='submit' value='CREATE'></input>
             </form>
+            <form action='/dog/upload' method='POST' enctype="multipart/form-data">
+                <input type='file' name='image'></input>
+                <button type='submit'>UPLOAD</button>
+            </form>
         </div>
     )
 }

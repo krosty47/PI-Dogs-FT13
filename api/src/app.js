@@ -3,11 +3,16 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const cors = require('cors');
+const multer = require('multer');
+var upload = multer({dest:'public/uploads'}).single('image');
 
 require('./db.js');
 
 const server = express();
 
+server.use(upload)
+server.use(multer({ dest: 'public/uploads' }).single('image'))
+server.use(express.urlencoded({extended: false}));
 server.use(cors());
 server.name = 'API';
 server.use(express.json({ limit: '50mb' }))
@@ -33,3 +38,5 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 module.exports = server;
+
+
