@@ -20,15 +20,6 @@ const {
 
 
 
-let image = (ref) => {
-    if (ref === undefined) {
-        return 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg'
-    } else {
-        return `https://cdn2.thedogapi.com/images/${ref}.jpg`
-    }
-}
-
-//el.reference_image_id
 
 router.get('/', async (req, res) => {
     const { nameFront } = req.query;
@@ -52,7 +43,7 @@ router.get('/', async (req, res) => {
                 return {
                     id: el.id,
                     name: el.nameB || el.name,
-                    img: el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
+                    img: el.img || el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // SI AGREGAMOS IMAGEN AL CREAR, MODIFICAR EN ESTA RUTA
                     weight: el.weight.metric ||el.weight,
                     height: el.height ||el.height.metric,
                     temperament: el.temperament || el.temperaments || 'This breed have a really rare temperament'// PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
@@ -90,7 +81,7 @@ router.get('/', async (req, res) => {
                 return {
                     id: el.id,
                     name: el.nameB || el.name,
-                    img: image(el.reference_image_id), // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
+                    img: el.img || el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
                     weight: el.weight.metric ||el.weight,
                     height: el.height.metric ||el.height,
                     temperament: el.temperaments || el.temperament || 'This breed have a really rare temperament' // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
@@ -145,7 +136,7 @@ router.get('/detail/:idBreed', async (req, res) => {
 
         if (breed.nameB) {
             return res.json({
-                img: 'https://random.dog/', // AGREGAR SOLO LA IMAGEN ACA
+                img: breed.img, 
                 name: breed.nameB,
                 temperament: breed.temperaments,
                 weight: breed.weight,

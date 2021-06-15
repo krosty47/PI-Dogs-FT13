@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { storage } from '../../firebase/index'
+import swal from 'sweetalert';
 
 import { getAllBreeds, getTemperaments } from '../../actions/index';
 
@@ -13,11 +15,60 @@ export default function BreedCreation() {
     const breedsSelector = useSelector(state => state.breeds)
     const temperaments = useSelector(state => state.temperaments)
 
+    const [image, setImage] = useState(null);
+
+
+
+
+//---------------IMAGE UPLOAD FIREBASE---------------//
+
+    const handleAddImgChange = e => {
+        e.preventDefault();
+        const fileArray = Array.from(e.target.files)
+        if (image){
+            setImage(null)
+            showAlertRmv()
+            return
+        }
+        if (e.target.files[0]) {
+            console.log(e.target.files[0])
+            setImage(e.target.files[0])
+            showAlertAdd()
+            return
+        }
+    }
+    console.log('IMAGE', image)
+
+    const handleUpload = () => {
+        const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error)
+            },
+            () => {
+                storage
+                    .ref('images')
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        input.img = url
+                        alert('the image was added successfully')
+                    });
+            }
+        )
+    };
+
+//-----------------------------------------------------//
+
+
     const [input, setInput] = useState({
         nameB: '',
         height: '',
         weight: '',
         years: '',
+        img: '',
         nameT: [],
     })
 
@@ -43,11 +94,13 @@ export default function BreedCreation() {
                 height: '',
                 weight: '',
                 years: '',
+                img: '',
                 nameT: [],
             })
         })
             .catch(res => alert('The breed already exist. Please try with other name.'))
     }
+
 
     function handleTemperamentSelect(e) {
         if (input.nameT.length === 0) {
@@ -56,7 +109,7 @@ export default function BreedCreation() {
         if (input.nameT.length === 1) {
             alert('You add 2 temperament!')
         }
-        if (input.nameT.length >= 3) {
+        if (input.nameT.length >= 2) {
             alert('The last was added')
         }
         else {
@@ -67,6 +120,35 @@ export default function BreedCreation() {
         }
     }
 
+
+    //-------------ALERTS---------------//
+
+    const showAlertAdd = () =>{
+        swal({
+            title: 'SELECT FILE',
+            text: 'Your file was selected successfully.',
+            icon: 'success',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlertRmv = () =>{
+        swal({
+            title: 'REMOVE FILE',
+            text: 'Your file was removed successfully.',
+            icon: 'error',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlert = () =>{
+        swal({
+            title: 'SELECT FILE',
+            text: 'Select a file first!.',
+            icon: 'warning',
+            button: 'Aceptar'
+        })
+    }
 
     return (
         <div className='backGCreate'>
@@ -86,10 +168,12 @@ export default function BreedCreation() {
                 </select>
                 <input className='createButton' type='submit' value='CREATE'></input>
             </form>
-            <form action='/dog/upload' method='POST' enctype="multipart/form-data">
-                <input type='file' name='image'></input>
-                <button type='submit'>UPLOAD</button>
-            </form>
+            <div className='imgPosition'>
+                <label className='imgInput' htmlFor='AddSelect'>SELECT FILE</label>
+                <input className='imgInputDefault' type='file' id='AddSelect' onChange={handleAddImgChange}></input>
+                <button className='removeButton' onClick={handleAddImgChange}>REMOVE FILE</button>
+                <button className='imgUpload' onClick={handleUpload}>UPLOAD</button>
+            </div>
         </div>
     )
 }

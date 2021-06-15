@@ -26,5 +26,8 @@ module.exports = (sequelize) => {
         years: {
             type: DataTypes.STRING,
         },
+        img: {
+            type: DataTypes.STRING(500)
+        }
     });
 };

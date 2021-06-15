@@ -2,11 +2,10 @@ const router = require('express').Router();
 const { Breeds } = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
-
 router.post('/', async (req, res, next) => {
 
     //let name = req.body.name.toLowerCase();
-    const { nameB, weight, height, years, nameT } = req.body;
+    const { nameB, weight, height, years, img, nameT } = req.body;
 
 
     try {
@@ -15,6 +14,7 @@ router.post('/', async (req, res, next) => {
             weight,
             height,
             years,
+            img,
             id: uuidv4(),
             // EN CASO DE QUERER AGREGAR UNA IMAGEN:
             // reference_image_id 
@@ -30,10 +30,5 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.post('/upload', (req, res, next) => {
-
-    console.log(req.file)
-    res.send('Enviar Data')
-})
 
 module.exports = router;

@@ -145,7 +145,7 @@
 .createTemps{
     color: #593E35;
     position:relative;
-    left:6%;
+    left:25%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -173,8 +173,71 @@
     border: 1px solid black;
     border-radius: 10px;
     position:relative;
-    top:16%;
+    bottom:-22%;
     right:25%;
+    font-size:16px;
+    width: 400px;
+    height: 45px;
+    cursor:pointer;
+}
+
+.imgPosition{
+    width: 425px;
+    height: 50px;
+    position:relative;
+    left:37%;
+    bottom:25%;
+}
+
+.imgInput{
+    background-color: #FFFCF7;
+    color: #593E35;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    bottom:33%;
+    left:7%;
+    font-size:16px;
+    width: 100px;
+    height: 43px;
+    cursor:pointer;
+}
+
+.imgInputDefault[type="file"] {
+    display:none;
+}
+
+.removeButton{
+    background-color: #FFFCF7;
+    color: #593E35;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    bottom:123%;
+    left:38%;
+    font-size:16px;
+    width: 100px;
+    height: 45px;
+    cursor:pointer;
+}
+
+.imgUpload{
+    background-color: #FFFCF7;
+    color: #593E35;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    left:70%;
+    bottom:214%;
     font-size:16px;
     width: 100px;
     height: 45px;
