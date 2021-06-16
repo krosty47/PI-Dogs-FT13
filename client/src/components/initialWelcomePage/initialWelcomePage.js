@@ -5,21 +5,17 @@ import '../initialWelcomePage/initialWelcomePage.css'
 
 export default function InitialWelcomePage () {
     return (
-        <center className='allWelcome'>
+        <div className='allWelcome'>
 
-                <h1 className='welcomeTitle'>wanna aDOGt?</h1>
+                <h1 className='welcomeTitle'>Wanna aDOGt?</h1>
 
-                <div className='welcomeImage'></div>
-
+                <div class="welcomeImage" ></div>
                 <div className='welcomeInfo1'>All the information you need before addopting a dog.</div>
 
-                <div className='welcomeLink'>
                 <Link className='Btext' to='/home'>
-                    <button className='welButton' type="button" >SHOW ME MORE</button>
+                    <button className='welButton' type="button" >PLEASE I WANT TO KNOW !</button>
                     </Link>
-                </div>
 
-
-        </center>
+        </div>
     )
 }

@@ -4,65 +4,66 @@ import axios from 'axios';
 import { storage } from '../../firebase/index'
 import swal from 'sweetalert';
 
-import { getAllBreeds, getTemperaments } from '../../actions/index';
+import { getTemperaments } from '../../actions/index';
 
 import '../breedCreation/breedCreation.css'
 
 
 export default function BreedCreation() {
 
-    const dispatch = useDispatch()  // VAMOS HACER DISPATCH A GETTEMPERAMENTS Y GETALLBREEDS
-    const breedsSelector = useSelector(state => state.breeds)
+    const dispatch = useDispatch()  
     const temperaments = useSelector(state => state.temperaments)
-
+    
+    
+    
+    //---------------IMAGE UPLOAD FIREBASE---------------//
     const [image, setImage] = useState(null);
 
-
-
-
-//---------------IMAGE UPLOAD FIREBASE---------------//
-
-    const handleAddImgChange = e => {
+    const handleAddImgChange = (e) => {
         e.preventDefault();
-        const fileArray = Array.from(e.target.files)
-        if (image){
-            setImage(null)
-            showAlertRmv()
-            return
-        }
         if (e.target.files[0]) {
             console.log(e.target.files[0])
             setImage(e.target.files[0])
             showAlertAdd()
-            return
         }
     }
-    console.log('IMAGE', image)
+
+    const handleRmvImgChange = (e) => {
+        e.preventDefault();
+        if (!image || document.getElementById("AddSelect").value === '') {
+            showAlert()
+            return
+        }
+        if (image) {
+            document.getElementById("AddSelect").value = '';
+            showAlertRmv()
+        }
+    }
 
     const handleUpload = () => {
+        if (!image || document.getElementById("AddSelect").value === '') {
+            showAlert()
+            return
+        }
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
-        uploadTask.on(
-            "state_changed",
-            snapshot => {},
-            error => {
-                console.log(error)
-            },
+        uploadTask.on("state_changed", snapshot => { }, error => { console.log(error) },
             () => {
-                storage
-                    .ref('images')
-                    .child(image.name)
-                    .getDownloadURL()
-                    .then(url => {
-                        input.img = url
-                        alert('the image was added successfully')
-                    });
+                storage.ref('images').child(image.name).getDownloadURL().then(url => {
+                    input.img = url
+                    showAlertUpload()
+                });
             }
         )
     };
 
-//-----------------------------------------------------//
+    //-----------------------------------------------------//
 
 
+    useEffect(() => {
+        const dbTemperaments = () => { dispatch(getTemperaments()) }
+        dbTemperaments()
+    }, [dispatch])
+    
     const [input, setInput] = useState({
         nameB: '',
         height: '',
@@ -72,12 +73,6 @@ export default function BreedCreation() {
         nameT: [],
     })
 
-    useEffect(() => {
-        const dbTemperaments = () => { dispatch(getTemperaments()) }
-        dbTemperaments()
-    }, [dispatch])
-
-    console.log(temperaments)
 
     const handleInputChange = (e) => {
         setInput({
@@ -86,7 +81,7 @@ export default function BreedCreation() {
         })
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3001/dog', input).then(r => {
             setInput({
@@ -97,33 +92,44 @@ export default function BreedCreation() {
                 img: '',
                 nameT: [],
             })
+            showAlertCreate();
         })
-            .catch(res => alert('The breed already exist. Please try with other name.'))
+            .catch(res => showAlertExist())
     }
 
+
+    //------------------HANDLE TEMPERAMENTS---------------//
 
     function handleTemperamentSelect(e) {
+
         if (input.nameT.length === 0) {
-            alert('You add 1 temperament!')
+            input.nameT.push(e.target.value)
+            showAlertTempsAdded()
+            return
         }
         if (input.nameT.length === 1) {
-            alert('You add 2 temperament!')
+            input.nameT.push(e.target.value)
+            showAlertTempsAdded()
+            return
         }
-        if (input.nameT.length >= 2) {
-            alert('The last was added')
+        if (input.nameT.length === 2) {
+            input.nameT.push(e.target.value)
+            showAlertTempsAdded()
+            return
         }
-        else {
-            setInput({
-                ...input,
-                nameT: [...input.nameT, e.target.value]
-            })
-        }
+    };
+
+    function handleTemperamentRmv(e) {
+        e.preventDefault();
+        input.nameT.pop()
+        showAlertTempsRmv()
+
     }
+    //-----------------------------------------------------//
 
+    //---------------------ALERTS--------------------------//
 
-    //-------------ALERTS---------------//
-
-    const showAlertAdd = () =>{
+    const showAlertAdd = () => {
         swal({
             title: 'SELECT FILE',
             text: 'Your file was selected successfully.',
@@ -132,7 +138,7 @@ export default function BreedCreation() {
         })
     }
 
-    const showAlertRmv = () =>{
+    const showAlertRmv = () => {
         swal({
             title: 'REMOVE FILE',
             text: 'Your file was removed successfully.',
@@ -141,7 +147,7 @@ export default function BreedCreation() {
         })
     }
 
-    const showAlert = () =>{
+    const showAlert = () => {
         swal({
             title: 'SELECT FILE',
             text: 'Select a file first!.',
@@ -149,6 +155,53 @@ export default function BreedCreation() {
             button: 'Aceptar'
         })
     }
+
+    const showAlertExist = () => {
+        swal({
+            title: 'ALREADY EXIST',
+            text: 'The breed already exist. Please try with other name.',
+            icon: 'warning',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlertCreate = () => {
+        swal({
+            title: 'BREED SUCCESSFULLY CREATED',
+            text: 'CONGRATULATIONS',
+            icon: 'success',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlertUpload = () => {
+        swal({
+            title: 'THE FILE IS UPLOAD!',
+            text: 'Please keep going and create the breed.',
+            icon: 'success',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlertTempsAdded = () => {
+        swal({
+            title: 'TEMPERAMENT ADDED',
+            text: 'Up to 3 !',
+            icon: 'success',
+            button: 'Aceptar'
+        })
+    }
+
+    const showAlertTempsRmv = () => {
+        swal({
+            title: 'TEMPERAMENT REMOVED',
+            text: '',
+            icon: 'warning',
+            button: 'Aceptar'
+        })
+    }
+
+    //-----------------------------------------------------//
 
     return (
         <div className='backGCreate'>
@@ -171,7 +224,8 @@ export default function BreedCreation() {
             <div className='imgPosition'>
                 <label className='imgInput' htmlFor='AddSelect'>SELECT FILE</label>
                 <input className='imgInputDefault' type='file' id='AddSelect' onChange={handleAddImgChange}></input>
-                <button className='removeButton' onClick={handleAddImgChange}>REMOVE FILE</button>
+                <button className='removeButton' onClick={handleRmvImgChange}>REMOVE FILE</button>
+                <button className='removeTemp' onClick={handleTemperamentRmv}>REMOVE TEMP</button>
                 <button className='imgUpload' onClick={handleUpload}>UPLOAD</button>
             </div>
         </div>
