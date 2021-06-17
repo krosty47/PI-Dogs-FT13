@@ -14,8 +14,9 @@ export default function Home() {
 
     const dispatch = useDispatch()
     const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS DEL STORE
-
+    
     /////---------------------------------------///
+    
 
     /////--------HOOK TO DISPLAY BREEDS---------///
 
@@ -58,15 +59,18 @@ export default function Home() {
         setCurrentPage(1)  // VAMOS A CAMBIAR EL ESTADO DE LA PAGINA MODIFICANDO EL SELECTOR 
     }, [breedsSelector])   // SOLO SE VUELVE A EJECUTAR SI EL ESTADO allBreeds CAMBIO 
 
+
+    
     if (!breedsSelector.length) {
+        
         return (
             <div className='notBreedFound'>
                 LOADING...
             </div>
         )
     }
-
-    // if breed found
+    
+    
     return (
         <div className='outBreed'>
             <div className='cardsPosition'>

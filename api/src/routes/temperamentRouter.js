@@ -13,9 +13,9 @@ try {
     axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
         .then((response) => response.data)
         .then((json) => {
-            json?.forEach(el => {
+            json?.map(el => {
                 let temps = el.temperament?.split(', ');
-                temps?.forEach(t => {
+                temps?.map(t => {
                     if (!temp.find(tp => tp.nameT === t)) {
                         temp.push({ nameT: t });
                     }
@@ -23,7 +23,7 @@ try {
             })
         })
         .then(() => {
-            temp.forEach(t => {
+            temp.map(t => {
                 Temperaments.findOrCreate({
                     where: {
                         nameT: t.nameT

@@ -4,9 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 
 router.post('/', async (req, res, next) => {
 
-    //let name = req.body.name.toLowerCase();
     const { nameB, weight, height, years, img, nameT } = req.body;
-
 
     try {
         let newRaza = await Breeds.create({
@@ -16,12 +14,9 @@ router.post('/', async (req, res, next) => {
             years,
             img,
             id: uuidv4(),
-            // EN CASO DE QUERER AGREGAR UNA IMAGEN:
-            // reference_image_id 
         })
-        await newRaza.setTemperaments(nameT)  // TEDRIAMOS QUE PASAR UN ARREGLO CON EL ID DE EL TEMPERAMENTO
+        await newRaza.setTemperaments(nameT)  // el nombre es en plural porque sequelize la pluraliza
 
-        // LUEGO DE CREARLO HABRIA QUE MANDARLO A LA PANTALLA DEL DETALLER CON RES.REDIRECT
         return res.send("FUNCIONO")
 
     } catch (err) {

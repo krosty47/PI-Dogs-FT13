@@ -33,8 +33,8 @@ export default function BreedDetail({ match }) {
                 <div>
                     <img className='cardDetailImage' src={oneBreed.img} alt='img not found'></img>
                 </div>
-                <h3>WEIGHT: ({oneBreed.weight})</h3>
                 <h3>HEIGHT: ({oneBreed.height})</h3>
+                <h3>WEIGHT: ({oneBreed.weight})</h3>
                 <h3>LIFE SPAN: ({oneBreed.life_span})</h3>
                 <h3>TEMPERAMENTS: ({temperaments.join(', ')})</h3>
             </div>
