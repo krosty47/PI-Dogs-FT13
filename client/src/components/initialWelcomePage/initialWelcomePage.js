@@ -13,7 +13,7 @@ export default function InitialWelcomePage () {
                 <div className='welcomeInfo1'>All the information you need before adopting a dog.</div>
 
                 <Link className='Btext' to='/home'>
-                    <button className='welButton' type="button" >PLEASE I WANT TO KNOW !</button>
+                    <button className='welButton' type="button" >PLEASE I WANNA KNOW !</button>
                     </Link>
 
         </div>
