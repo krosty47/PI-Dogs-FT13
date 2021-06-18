@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
             const apiData =  await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
             const dbBreeds = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
 
-
             dbBreeds.filter(el => {
                 let temp = el.dataValues.temperaments.map(temp => {
                     return temp.dataValues.nameT;
@@ -53,6 +52,7 @@ router.get('/', async (req, res) => {
             // LA RAZA CREADA
 
             // RAW: TRUE PARA RECIBIR EL ARRAY "PLANO", NO lE ENCONTRE LA SOLUCION, LA UNICA FORMA FUE USAR DATAVALUES
+            console.log(apiData2.data)
 
             dbBreeds2.filter(el => {
                 if (el.dataValues.nameB.toLowerCase().includes(nameFront.toLowerCase())) {
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
                 return {
                     id: el.id,
                     name: el.nameB || el.name,
-                    img: el.image && el.image.url || el.img, // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
+                    img: el.img || `https://cdn2.thedogapi.com/images/${el.reference_image_id}.jpg` || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
                     weight: el.weight.metric ||el.weight,
                     height: el.height.metric ||el.height,
                     temperament: el.temperaments || el.temperament || 'This breed have a really rare temperament' // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN

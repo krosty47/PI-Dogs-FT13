@@ -69,7 +69,7 @@ export default function BreedCreation() {
         height: '',
         weight: '',
         years: '',
-        img: '',
+        img: null,
         nameT: [],
     })
 
@@ -89,9 +89,13 @@ export default function BreedCreation() {
                 height: '',
                 weight: '',
                 years: '',
-                img: '',
+                img: null,
                 nameT: [],
             })
+            if(input.img === null){
+                showAlertImg()
+                return
+            }
             showAlertCreate();
         })
             .catch(res => showAlertExist())
@@ -195,6 +199,14 @@ export default function BreedCreation() {
     const showAlertTempsRmv = () => {
         swal({
             title: 'TEMPERAMENT REMOVED',
+            text: '',
+            icon: 'warning',
+            button: 'Aceptar'
+        })
+    }
+    const showAlertImg = () => {
+        swal({
+            title: 'YOU NEED TO UPLOUD AN IMAGE',
             text: '',
             icon: 'warning',
             button: 'Aceptar'

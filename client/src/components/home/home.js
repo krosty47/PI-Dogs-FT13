@@ -70,7 +70,6 @@ export default function Home() {
         )
     }
     
-    
     return (
         <div className='outBreed'>
             <div className='cardsPosition'>
