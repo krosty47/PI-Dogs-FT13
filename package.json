@@ -1,0 +1,23 @@
+{
+  "name": "pi-dogs",
+  "version": "1.0.0",
+  "description": "To prove my hability on the following technologies:\r - React\r - Redux\r - Express\r - PostgreSQL\r - Sequelize",
+  "main": "index.js",
+  "dependencies": {
+    "uuidv4": "^6.2.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krosty47/PI-Dogs-FT13.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krosty47/PI-Dogs-FT13/issues"
+  },
+  "homepage": "https://github.com/krosty47/PI-Dogs-FT13#readme"
+}
