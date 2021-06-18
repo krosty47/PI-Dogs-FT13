@@ -7,26 +7,14 @@ const {
 } = process.env;
 
 
-// PROBLEMAS: AL PONER UN NOMBRE EN EL END POINT https://api.thedogapi.com/v1/breeds/search?q=${nameFront},
-// ENCUENTRA RAZAS QUE NO APARECEN EN EL END POINT https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY},
-// AL INGRESAR AL ULTIMO END POINT DESDE LA WEB, ESAS RAZAS NO APARECEN, SOLO BUSCANDOLAS EN EL 1ER END POINT
-// EJ: BUSCAR EN EL END POINT https://api.thedogapi.com/v1/breeds/search?q=${nameFront} , LA RAZA BASSADOR
-// TAMBIEN, AL INGRESAR AL END POINT CON LA API KEY QUE BRINDA LA PAGINA EN https://docs.thedogapi.com/api-reference/breeds/breeds-list
-// NO NOS TRAE TODAS LAS RAZAS
-
-// POSIBLES SOLUCIONES PLANTEADAS:
-// QUE LA API KEY SE DEPRECO //  NO LO SOLUCIONO
-// CAMBIAR EL ORDEN EN QUE ENTRA A LA RUTA, 1RO COMPROBAR QUE HAYA NOMBRE Y LUEGO NO // NO LO SOLUCIONO
-
-
-
 
 router.get('/', async (req, res) => {
     const { nameFront } = req.query;
 
     try {
         if (!nameFront) {  // SI EL NOMBRE NO LLEGA HABRA QUE MOSTRAR LAS PRIMERAS 8 RAZAS
-            const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
+            
+            const apiData =  await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
             const dbBreeds = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
 
 
@@ -81,7 +69,7 @@ router.get('/', async (req, res) => {
                 return {
                     id: el.id,
                     name: el.nameB || el.name,
-                    img: el.img || el.image && el.image.url || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
+                    img: el.image && el.image.url || el.img, // PODRIAMOS AGREGAR UNA IMAGEN POR DEFECTO ACA SI NO SE ENCUENTRA
                     weight: el.weight.metric ||el.weight,
                     height: el.height.metric ||el.height,
                     temperament: el.temperaments || el.temperament || 'This breed have a really rare temperament' // PODRIAMOS AGREGAR TEMPERAMENTOS POR SI NO SE ENCUENTRAN
@@ -105,7 +93,7 @@ router.get('/detail/:idBreed', async (req, res) => {
 
     try {
         const apiData = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
-        const dbBreeds3 = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] });
+        const dbBreeds3 = await Breeds.findAll({ include: [{ model: Temperaments, required: true }] })
 
         dbBreeds3.filter(el => {
             if (el.dataValues.nameB.toLowerCase()) {
@@ -120,9 +108,6 @@ router.get('/detail/:idBreed', async (req, res) => {
 
         const breed = apiData.data.find(el => el.id === parseInt(idBreed) || el.id === idBreed)
 
-        if (breed === undefined || breed === null || breed === '') {
-            return res.status(404).json({ message: "The breed you are looking for is not found " })
-        }
         if (breed.name) {
             return res.json({
                 img: breed.image && breed.image.url,
@@ -136,7 +121,7 @@ router.get('/detail/:idBreed', async (req, res) => {
 
         if (breed.nameB) {
             return res.json({
-                img: breed.img, 
+                img: breed.img || 'https://criptoaldia.com/wp-content/uploads/2021/02/Elon-Musk-and-Dogecoin-650x375.jpg', 
                 name: breed.nameB,
                 temperament: breed.temperaments,
                 weight: breed.weight,

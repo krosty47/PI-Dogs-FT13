@@ -13,7 +13,7 @@ export default function Home() {
     /////----------DISPATCH Y STORE-------------///
 
     const dispatch = useDispatch()
-    const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS DEL STORE
+    const breedsSelector = useSelector(state => state.breeds)  // NOS TRAEMOS BREEDS
     
     /////---------------------------------------///
     

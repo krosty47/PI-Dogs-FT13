@@ -20,7 +20,7 @@ export default function BreedDetail({ match }) {
 
 
     if (oneBreed.temperament) {
-        var temperaments = oneBreed.temperament.split(', ')
+        var temperaments = oneBreed.temperament
     }
     else temperaments = []
 
@@ -36,7 +36,7 @@ export default function BreedDetail({ match }) {
                 <h3>HEIGHT: ({oneBreed.height})</h3>
                 <h3>WEIGHT: ({oneBreed.weight})</h3>
                 <h3>LIFE SPAN: ({oneBreed.life_span})</h3>
-                <h3>TEMPERAMENTS: ({temperaments.join(', ')})</h3>
+                <h3>TEMPERAMENTS: ({temperaments})</h3>
             </div>
         </div>
     )

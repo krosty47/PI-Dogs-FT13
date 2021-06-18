@@ -8,7 +8,7 @@ export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 export const FILTERS = "FILTERS";
 
 
-// ALL DOGS FROM API
+// ALL BREEDS FROM API
 export function getAllBreeds() {
     return (dispatch) => {
         axios.get('http://localhost:3001/dogs').then(response => {
@@ -18,6 +18,11 @@ export function getAllBreeds() {
 };
 
 // SPECIFIC BREED BY NAME
+const getBreedsName = async function (nameFront) {
+    const response = await axios.get(`http://localhost:3001/dogs?nameFront=${nameFront}`);
+    const breeds = response.data;
+    return breeds
+}
 export function filters(nameFront, temperament, sort, order) {
     return async (dispatch) => dispatch({ type: FILTERS, name: await getBreedsName(nameFront), temperament: temperament, sort: sort, order: order })
 };
@@ -40,11 +45,6 @@ export function getTemperaments() {
 };
 
 
-const getBreedsName = async function (nameFront) {
-    const response = await axios.get(`http://localhost:3001/dogs?nameFront=${nameFront}`);
-    const breeds = response.data;
-    return breeds
-}
 
 
 

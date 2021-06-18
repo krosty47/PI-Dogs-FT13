@@ -10,7 +10,7 @@ export default function InitialWelcomePage () {
                 <h1 className='welcomeTitle'>Wanna aDOGt?</h1>
 
                 <div class="welcomeImage" ></div>
-                <div className='welcomeInfo1'>All the information you need before addopting a dog.</div>
+                <div className='welcomeInfo1'>All the information you need before adopting a dog.</div>
 
                 <Link className='Btext' to='/home'>
                     <button className='welButton' type="button" >PLEASE I WANT TO KNOW !</button>
